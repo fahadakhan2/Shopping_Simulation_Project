@@ -1,0 +1,1 @@
+This project implements a shopping cart application in Java that allows users to add items to a cart, view the current total, see cart contents, edit quantities, remove items, and complete checkout. Functionality includes calculating totals and sales tax based on state, applying shipping charges, validating inputs, and providing purchase confirmation.
