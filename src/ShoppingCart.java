@@ -1,30 +1,21 @@
 package src;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class ShoppingCart {
     private ArrayList<Item> items = new ArrayList<>();
-    private State state;
-    private Shipping shipping;
+    private Shopper shopper;
 
-    public ShoppingCart(State st, Shipping sh) throws DataValidationException {
-        setState(st);
-        setShipping(sh);
+    public ShoppingCart(Shopper s) throws DataValidationException {
+        setShopper(s);
     }
 
-
-    private void setState(State st) throws DataValidationException {
-        if (st == null) {
-            throw new DataValidationException("Invalid state passed in as argument: " + st);
+    private void setShopper(Shopper s) throws DataValidationException {
+        if (s == null) {
+            throw new DataValidationException("Invalid shopper passed as argument: " + s);
         }
-        state = st;
-    }
-
-    private void setShipping(Shipping sh) throws DataValidationException{
-        if (sh == null) {
-            throw new DataValidationException("Invalid shipping option passed in as argument: " + sh);
-        }
-        shipping = sh;
+        shopper = s;
     }
 
     public void addItem(Item item) throws DataValidationException {
@@ -37,7 +28,7 @@ public class ShoppingCart {
         for (Item i : items) {
             countOfItems += i.getQuantity();
         }
-        System.out.println("The current count of items in the cart is" + countOfItems + ".");
+        System.out.println("The current count of items in the cart is: " + countOfItems);
     }
 
     public void getCurrentTotal() {
@@ -47,16 +38,16 @@ public class ShoppingCart {
         }
 
         double taxRate = 0.0;
-        if (State.IL == state || State.CA == state || State.NY == state) {
+        if (State.IL == shopper.getState() || State.CA == shopper.getState() || State.NY == shopper.getState()) {
             taxRate = 0.06; // 6% sales tax
         }
 
         double salesTax = total * taxRate;
 
         double shippingCost = 0.0;
-        if (shipping == Shipping.STANDARD) {
+        if (shopper.getPreferredShippingMethod() == Shipping.STANDARD) {
             shippingCost = (total > 50.0) ? 0.0 : 10.0;
-        } else if (shipping == Shipping.NEXT_DAY) {
+        } else if (shopper.getPreferredShippingMethod() == Shipping.NEXT_DAY) {
             shippingCost = 25.0;
         }
 

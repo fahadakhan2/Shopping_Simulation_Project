@@ -46,6 +46,6 @@ public class Item {
 
     @Override
     public String toString() {
-        return name + ": " + price + "x" + quantity;
+        return name + ": " + "$" + price + "x" + quantity;
     }
 }
