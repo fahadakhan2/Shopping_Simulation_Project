@@ -1,11 +1,25 @@
 package src;
 
 public class Shopper {
+    private String name;
     private State state;
     private Shipping preferredShippingMethod;
-    public Shopper(State state, Shipping preferredShippingMethod) throws DataValidationException {
+
+    public Shopper(String name, State state, Shipping preferredShippingMethod) throws DataValidationException {
+        setName(name);
         setState(state);
         setPreferredShippingMethod(preferredShippingMethod);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    private void setName(String n) throws DataValidationException {
+        if (n == null || n.isEmpty()) {
+            throw new DataValidationException("Invalid name passed in");
+        }
+        name = n;
     }
 
     public State getState() {
@@ -16,19 +30,6 @@ public class Shopper {
         if (st == null) {
             throw new DataValidationException("The state passed in is not valid: " + st);
         }
-
-        // Checks if the provided state is a valid enum constant
-        boolean isValidState = false;
-        for (State stateEnum : State.values()) {
-            if (stateEnum == st) {
-                isValidState = true;
-                break;
-            }
-        }
-
-        if (!isValidState) {
-            throw new DataValidationException("Invalid state enum: " + st);
-        }
         state = st;
     }
 
@@ -36,21 +37,9 @@ public class Shopper {
         return preferredShippingMethod;
     }
 
-    private void setPreferredShippingMethod(Shipping sh) throws DataValidationException {
+    private void setPreferredShippingMethod(Shipping sh) throws DataValidationException, IllegalArgumentException {
         if (sh == null) {
             throw new DataValidationException("The shipping method passed in is not valid: " + sh);
-        }
-
-        boolean isValidShippingMethod = false;
-        for (Shipping shippingEnum : Shipping.values()) {
-            if (shippingEnum == sh) {
-                isValidShippingMethod = true;
-                break;
-            }
-        }
-
-        if (!isValidShippingMethod) {
-            throw new DataValidationException("Invalid shipping enum: " + sh);
         }
         preferredShippingMethod = sh;
     }

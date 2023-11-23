@@ -5,14 +5,14 @@ public class Item {
     private double price;
     private int quantity;
 
-    public Item(String name, double price, int quantity) throws DataValidationException {
+    Item(String name, double price, int quantity) throws DataValidationException {
         setName(name);
         setPrice(price);
         setQuantity(quantity);
     }
 
     private void setName(String n) throws DataValidationException {
-        if (n.isEmpty()) {
+        if (n.isEmpty() || n == null) {
             throw new DataValidationException("Invalid name entered: " + n);
         }
         name = n;
